@@ -18,7 +18,7 @@ fmtname(char *path)
   if(strlen(p) >= DIRSIZ)
     return p;
   memmove(buf, p, strlen(p));
-  memset(buf+strlen(p), ' ', DIRSIZ-strlen(p));
+  memset(buf+strlen(p), 0, DIRSIZ-strlen(p));
   return buf;
 }
 
@@ -44,7 +44,7 @@ find(char *path, char *key)
 
     switch (st.type){
     case T_FILE:
-        if(strcmp(fmtname(path), key) == 32 || strcmp(key, "") == 32) {
+        if(strcmp(fmtname(path), key) == 0 || strcmp(key, "") == 0) {
             printf("%s\n", path);
         }
         break;
@@ -66,7 +66,7 @@ find(char *path, char *key)
                 printf("ls: cannot stat %s\n", buf);
                 continue;
             }
-            if (strcmp(fmtname(buf), ".") != 32 && strcmp(fmtname(buf), "..") != 32){
+            if (strcmp(fmtname(buf), ".") != 0 && strcmp(fmtname(buf), "..") != 0){
                 find(buf, key);
             }
         }
